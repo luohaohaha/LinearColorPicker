@@ -73,6 +73,7 @@ public class LinearColorPicker extends View {
 	private int[] mColors = new int[] { // 渐变色数组
 			0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000 };
 
+	private static  final  int MAX_PROGRESS = 100;
 	/**
 	 * 需要减去的偏移量 为滑块一半
 	 */
@@ -100,12 +101,14 @@ public class LinearColorPicker extends View {
 		// 方向
 		mOrientation = a.getInt(R.styleable.custom_orientation, 1);
 		// 颜色条宽度
-		mColorPanelWidth = a.getDimension(R.styleable.custom_colorPanelWidth, 50f);
+		mColorPanelWidth = a.getDimensionPixelOffset(R.styleable.custom_colorPanelWidth, mDefaultHeight);
 		// 颜色数组
 		int colorArrayId = a.getResourceId(R.styleable.custom_gradientArray, -1);
 		if (-1 != colorArrayId) {
 			mColors = getResources().getIntArray(colorArrayId);
 		}
+		//释放资源
+		a.recycle();
 
 		if (null != mThumb) {
 			mThumb.setBounds(0, 0, mThumb.getIntrinsicWidth(), mThumb.getIntrinsicWidth());
@@ -209,11 +212,42 @@ public class LinearColorPicker extends View {
 		}
 
 		//回调当前颜色
+		int lineWidth= HORIZONTAL == mOrientation ? getMeasuredWidth() :getMeasuredHeight();
+		progress= (int) ((mThumbOffset/ (lineWidth-2*mOffset) ) * MAX_PROGRESS);
 		if (null != mSelectListener) {
-			mSelectListener.onColorSelect(getCurrentColor());
+			mSelectListener.onColorSelect(getCurrentColor(),progress);
 		}
 	}
 
+	/**
+	 * 设置进度值
+	 * @param progress
+     */
+	public void setProgress(final int progress){
+		post(new Runnable() {
+			@Override
+			public void run() {
+				if(HORIZONTAL == mOrientation) {
+					mThumbOffset = (progress* (getMeasuredWidth() - 2 * mOffset)) / MAX_PROGRESS ;
+					lastX = mThumbOffset + mOffset;
+				}else{
+					mThumbOffset = (progress* (getMeasuredHeight() - 2 * mOffset)) / MAX_PROGRESS;
+					lastY = mThumbOffset + mOffset;
+				}
+
+				invalidate();
+			}
+		});
+	}
+
+	/**
+	 * 获取当前进度值
+	 * @return
+     */
+	public  int getCurrentProgress(){
+
+		return progress;
+	}
 	private float lastX = 0;
 	private float lastY = 0;
 
@@ -228,6 +262,8 @@ public class LinearColorPicker extends View {
 		return super.onTouchEvent(event);
 	}
 
+	private int progress = -1;
+
 	/**
 	 * 处理垂直方向边界值
 	 *
@@ -236,14 +272,15 @@ public class LinearColorPicker extends View {
 	 */
 	private boolean handleBoundHorizontal(MotionEvent event) {
 		mThumbOffset += (event.getX() - lastX);
+		float colorMaxWidth=getMeasuredWidth() - 2 * mOffset;
 		if (mThumbOffset <= 0) {
 			mThumbOffset = 0;
 			lastX = mOffset;
 			invalidate();
 			return true;
 		}
-		if (mThumbOffset > getMeasuredWidth() - 2 * mOffset) {
-			mThumbOffset = getMeasuredWidth() - 2 * mOffset;
+		if (mThumbOffset > colorMaxWidth) {
+			mThumbOffset = colorMaxWidth;
 			lastX = getMeasuredWidth() - mOffset;
 			invalidate();
 			return true;
@@ -348,6 +385,6 @@ public class LinearColorPicker extends View {
 	}
 
 	public interface OnColorSelectListener {
-		void onColorSelect(int color);
+		void onColorSelect(int color,int progress);
 	}
 }
