@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView textView= (TextView) findViewById(R.id.text);
         colorPicker.setOnColorSelectListener(new LinearColorPicker.OnColorSelectListener() {
             @Override
-            public void onColorSelect(int color) {
+            public void onColorSelect(int color , int progress) {
                 textView.setBackgroundColor(color);
             }
         });
