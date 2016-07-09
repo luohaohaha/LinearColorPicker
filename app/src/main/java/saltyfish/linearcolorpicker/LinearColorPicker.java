@@ -255,7 +255,6 @@ public class LinearColorPicker extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_DOWN:
-			return HORIZONTAL == mOrientation ? handleBoundHorizontal(event) : handleBoundVertical(event);
 		case MotionEvent.ACTION_MOVE:
 			return HORIZONTAL == mOrientation ? handleBoundHorizontal(event) : handleBoundVertical(event);
 		}
