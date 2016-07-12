@@ -3,7 +3,7 @@
 
     <declare-styleable name="custom">
 
-        <attr name="orientation">
+        <attr name="colorOrientation">
             <enum name="vertical" value="0" />
             <enum name="horizontal" value="1" />
         </attr>
