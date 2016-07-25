@@ -11,7 +11,7 @@ thumbDrawable>>>>滑块图标
 
 colorPanelWidth>>>>颜色条大小
 
-orientation>>>>布局方向
+colorOrientation>>>>布局方向
 
 gradientArray>>>>渐变颜色数组 默认为 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF, 0xFF00FFFF, 0xFF00FF00, 0xFFFFFF00, 0xFFFF0000
 
@@ -23,7 +23,7 @@ gradientArray>>>>渐变颜色数组 默认为 0xFFFF0000, 0xFFFF00FF, 0xFF0000FF
         android:layout_below="@+id/text"
         android:layout_marginTop="20dp"
         app:colorPanelWidth="10dp"
-        app:orientation="horizontal"
+        app:colorOrientation="horizontal"
         android:layout_height="wrap_content" />
   ```
 
