@@ -15,7 +15,7 @@
         <!--the color picker height-->
         <attr name="pickerHeight" format="dimension" />
 
-        <!--the color picker height-->
+        <!--the color picker round corner-->
         <attr name="pickerRoundCorner" format="dimension" />
 
         <!--the color picker color gradient array-->
