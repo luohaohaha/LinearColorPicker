@@ -1,0 +1,3 @@
+rootProject.name = "LinearColorPicker"
+include ':library'
+include ':app'
