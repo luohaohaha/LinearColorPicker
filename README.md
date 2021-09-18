@@ -20,4 +20,4 @@ A simple color picker, supports horizontal and vertical
         
 ```
 
-
+![ ](https://github.com/luohaohaha/LinearColorPicker/blob/master/image/device-2021-09-18-171818.gif)
