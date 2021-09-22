@@ -161,12 +161,12 @@ public class LinearColorPicker extends View {
         requestLayout();
     }
 
-    public float getColorPanelWidth() {
+    public float getColorPanelHeight() {
         return mColorPanelHeight;
     }
 
-    public void setColorPanelWidth(float panelWidth) {
-        this.mColorPanelHeight = panelWidth;
+    public void setColorPanelHeight(float panelHeight) {
+        this.mColorPanelHeight = panelHeight;
         if (null == mPaint)
             return;
         mPaint.setStrokeWidth(mColorPanelHeight);
